@@ -1,6 +1,7 @@
 var cityFormEl = document.querySelector("#city-form")
 var citySearchEl = document.querySelector("#city-search")
 var cityNameEl = document.querySelector("#city-name")
+var currentDate = document.querySelector("#current-date")
 var tempEl = document.querySelector("#temperature")
 var humidEl = document.querySelector("#humidity")
 var windSpeedEl = document.querySelector("#wind-speed")
@@ -43,6 +44,20 @@ var formSubmitHandler = function(event) {
 var displayCurrentWeather = function(location) {
     // display city to current city weather card
     cityNameEl.textContent = location.name
+    
+    // dislplay weather icon for current weather condition
+    var icon = location.weather[0].icon
+    var iconUrl = "https://openweathermap.org/img/wn/" + icon + ".png"
+    var iconImage = document.createElement("img")
+    iconImage.setAttribute("src", iconUrl)
+    iconImage.setAttribute("id", "weather-icon")
+    var weatherIconEl = document.querySelector("#current-weather-icon")
+    cityNameEl.appendChild(iconImage)
+
+    // display current date
+    currentDate.textContent = moment().format(" (MM/DD/YYYY) ")
+
+    // display weather properties
     tempEl.textContent = "Temperature: " + location.main.temp + " °F"
     humidEl.textContent = "Humidity: " + location.main.humidity + " %" 
     windSpeedEl.textContent = "Wind Speed: " + location.wind.speed + " MPH"
@@ -58,10 +73,22 @@ var displayUvIndex = function(lat, lon) {
     var uvIndexApi = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=56f3f1c095b48e9300d7b4ab51186f23"
     fetch(uvIndexApi).then(function(response) {
         response.json().then(function(data) {
-            console.log(data)
             uvIndexEl.textContent = "UV Index: " + data.value
+            uvIndexColor(data)
         })
     })
+}
+
+// change uv index color depending on weather conditions
+var uvIndexColor = function(index) {
+    var indexValue = index.value
+    if (indexValue < 3) {
+        uvIndexEl.classList = "bg-success"
+    } else if (indexValue > 3 && indexValue < 8) {
+        uvIndexEl.classList = "bg-warning"
+    } else if (indexValue > 8) {
+        uvIndexEl.classList = "bg-danger"
+    }
 }
 
 // display weather forecast
