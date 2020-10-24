@@ -92,5 +92,14 @@ var uvIndexColor = function(index) {
 }
 
 // display weather forecast
+var getWeatherForecast = function(location) {
+    var forecastApiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=56f3f1c095b48e9300d7b4ab51186f23"
+    fetch(forecastApiUrl).then(function(response) {
+        response.json().then(function (data) {
+            console.log(data)
+        })
+    })
+}
+getWeatherForecast("san francisco")
 
 cityFormEl.addEventListener("submit", formSubmitHandler)
