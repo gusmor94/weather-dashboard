@@ -10,20 +10,58 @@
 <body>
     <header>Weather Dashboard</header>
 
-    <main class="flex-row justify-space-between">
+    <main class="row">
+        <!--left column containing the city search form and search history-->
         <div class="col-12 col-md-4" id="left-column">
             <div id="city-search">
                 <h3>Search for a City:</h3>
-                <form id="search-form" class="form-inline">
-                    <input id="search-term" class="form-control">
+                <form id="city-form" class="form-inline">
+                    <input id="city-search" type="text" autofocus="true" class="form-control">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
                 
             </div>
             <div id="city-history" class="list-group"></div>
         </div>
-        <div class="col-12 col-md-8" id="right-column"></div>
+
+        <!--right column containing current weather card and 5-day forecast cards-->
+        <div class="col-12 col-md-8" id="right-column">
+            <div class="card" id="current-city-weather">
+                <br>
+                <h2 id="city-name" class="text-uppercase"><span id="current-weather-icon"></span></h2>
+                <br>
+                <p id="temperature"></p>
+                <br>
+                <p id="humidity"></p>
+                <br>
+                <p id="wind-speed"></p>
+                <br>
+                <p id="uv-index"><span id="uv-index-result"></span></p>
+                <br>
+            </div>
+            <br>
+
+            <h2>5-Day Forecast:</h2>
+            <div class="card-deck">
+                <div class="card bg-primary" id="day-one">
+                    <div class="card-body"></div>
+                </div>
+                <div class="card bg-primary" id="day-two">
+                    <div class="card-body"></div>
+                </div>
+                <div class="card bg-primary" id="day-three">
+                    <div class="card-body"></div>
+                </div>
+                <div class="card bg-primary" id="day-four">
+                    <div class="card-body"></div>
+                </div>
+                <div class="card bg-primary" id="day-five">
+                    <div class="card-body"></div>
+                </div>
+            </div>
+        </div>
     </main>
     
+    <script src="./assets/script.js"></script>
 </body>
 </html>

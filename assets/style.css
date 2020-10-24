@@ -14,3 +14,11 @@ header {
     background-color: #ededed;
     padding: 10px 15px;
 }
+
+#city-search {
+    padding: 0 10px;
+}
+
+#current-city-weather {
+    padding: 0 0 0 15px;
+}
