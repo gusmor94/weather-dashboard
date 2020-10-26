@@ -1,3 +1,5 @@
+var cities = JSON.parse(localStorage.getItem("cities")) || []
+
 var cityFormEl = document.querySelector("#city-form")
 var searchTermEl = document.querySelector("#search-term")
 var searchHistoryEl = document.querySelector("#city-history")
@@ -38,6 +40,9 @@ var formSubmitHandler = function(event) {
         getCurrentWeather(cityName)
         getWeatherForecast(cityName)
         searchTermEl.value = ""
+        // call saveCity function 
+        cities = [cityName]
+        saveCity()
     } else {
         alert("Please enter an appropriate city name.")
     }
@@ -51,6 +56,13 @@ var formSubmitHandler = function(event) {
         getCurrentWeather(cityName)
         getWeatherForecast(cityName)
     })
+
+    
+}
+
+// save city search to localStorage
+var saveCity = function() {
+    localStorage.setItem("cities", JSON.stringify(cities))
 }
 
 // display weather
