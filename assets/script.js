@@ -1,5 +1,6 @@
 var cityFormEl = document.querySelector("#city-form")
 var searchTermEl = document.querySelector("#search-term")
+var searchHistoryEl = document.querySelector("#city-history")
 var cityNameEl = document.querySelector("#city-name")
 var currentDate = document.querySelector("#current-date")
 var tempEl = document.querySelector("#temperature")
@@ -40,6 +41,16 @@ var formSubmitHandler = function(event) {
     } else {
         alert("Please enter an appropriate city name.")
     }
+
+    // create a search history
+    var previousSearch = document.createElement("button")
+    previousSearch.classList = "list-group-item list-group-item-action"
+    previousSearch.textContent = cityName
+    searchHistoryEl.appendChild(previousSearch)
+    previousSearch.addEventListener("click", function(event) {
+        getCurrentWeather(cityName)
+        getWeatherForecast(cityName)
+    })
 }
 
 // display weather
