@@ -1,5 +1,5 @@
 var cityFormEl = document.querySelector("#city-form")
-var citySearchEl = document.querySelector("#city-search")
+var searchTermEl = document.querySelector("#search-term")
 var cityNameEl = document.querySelector("#city-name")
 var currentDate = document.querySelector("#current-date")
 var tempEl = document.querySelector("#temperature")
@@ -26,16 +26,17 @@ var getCurrentWeather = function(city) {
         alert("Unable to connect to Open Weather")
     })
 }
-getCurrentWeather("san francisco")
+
 
 // search for a specific city
 var formSubmitHandler = function(event) {
     event.preventDefault()
     // get the value from input element
-    var cityName = citySearchEl.value.trim()
+    var cityName = searchTermEl.value.trim()
     if (cityName) {
         getCurrentWeather(cityName)
-        citySearchEl.value = ""
+        getWeatherForecast(cityName)
+        searchTermEl.value = ""
     } else {
         alert("Please enter an appropriate city name.")
     }
@@ -100,7 +101,7 @@ var getWeatherForecast = function(location) {
         })
     })
 }
-getWeatherForecast("san francisco")
+
 
 var displayWeatherForecast = function(forecast) {
     // day one
