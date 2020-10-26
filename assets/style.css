@@ -22,3 +22,7 @@ header {
 #current-city-weather {
     padding: 0 0 0 15px;
 }
+
+.hidden {
+    display: none;
+}

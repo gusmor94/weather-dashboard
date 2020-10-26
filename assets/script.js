@@ -6,6 +6,7 @@ var tempEl = document.querySelector("#temperature")
 var humidEl = document.querySelector("#humidity")
 var windSpeedEl = document.querySelector("#wind-speed")
 var uvIndexEl = document.querySelector("#uv-index")
+var cardDeckEl = document.querySelector(".card-deck")
 
 // fetch weather api
 var getCurrentWeather = function(city) {
@@ -73,7 +74,6 @@ var displayUvIndex = function(lat, lon) {
     var uvIndexApi = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=56f3f1c095b48e9300d7b4ab51186f23"
     fetch(uvIndexApi).then(function(response) {
         response.json().then(function(data) {
-            uvIndexEl.textContent = "UV Index: " + data.value
             uvIndexColor(data)
         })
     })
@@ -83,23 +83,87 @@ var displayUvIndex = function(lat, lon) {
 var uvIndexColor = function(index) {
     var indexValue = index.value
     if (indexValue < 3) {
-        uvIndexEl.classList = "bg-success"
+        uvIndexEl.innerHTML = "UV Index: <span id='uv-index-result' class='bg-success'>" + index.value + "</span>"
     } else if (indexValue > 3 && indexValue < 8) {
-        uvIndexEl.classList = "bg-warning"
+        uvIndexEl.innerHTML = "UV Index: <span id='uv-index-result' class='bg-warning'>" + index.value + "</span>"
     } else if (indexValue > 8) {
-        uvIndexEl.classList = "bg-danger"
+        uvIndexEl.innerHTML = "UV Index: <span id='uv-index-result' class='bg-danger'>" + index.value + "</span>"
     }
 }
 
 // display weather forecast
 var getWeatherForecast = function(location) {
-    var forecastApiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=56f3f1c095b48e9300d7b4ab51186f23"
+    var forecastApiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&units=imperial&appid=56f3f1c095b48e9300d7b4ab51186f23"
     fetch(forecastApiUrl).then(function(response) {
         response.json().then(function (data) {
-            console.log(data)
+            displayWeatherForecast(data)
         })
     })
 }
 getWeatherForecast("san francisco")
+
+var displayWeatherForecast = function(forecast) {
+    // day one
+    var iconOne = forecast.list[5].weather[0].icon
+    var iconOneUrl = "https://openweathermap.org/img/wn/" + iconOne + ".png"
+    var dayOne = document.querySelector("#day-one")
+    var imgOne = document.querySelector("#img-one")
+    var tempOne = document.querySelector("#temp-one")
+    var humidOne = document.querySelector("#humid-one")
+    dayOne.textContent = moment().add(1, "day").format("MM/DD/YYYY")
+    imgOne.setAttribute("src", iconOneUrl) 
+    tempOne.textContent = "Temp: " + forecast.list[5].main.temp + " °F"
+    humidOne.textContent = "Humidity: " + forecast.list[5].main.humidity + " %"
+
+    // day two
+    var iconTwo = forecast.list[13].weather[0].icon
+    var iconTwoUrl = "https://openweathermap.org/img/wn/" + iconTwo + ".png"
+    var dayTwo = document.querySelector("#day-two")
+    var imgTwo = document.querySelector("#img-two")
+    var tempTwo = document.querySelector("#temp-two")
+    var humidTwo = document.querySelector("#humid-two")
+    dayTwo.textContent = moment().add(2, "days").format("MM/DD/YYYY")
+    imgTwo.setAttribute("src", iconTwoUrl) 
+    tempTwo.textContent = "Temp: " + forecast.list[13].main.temp + " °F"
+    humidTwo.textContent = "Humidity: " + forecast.list[13].main.humidity + " %"
+
+    // day three
+    var iconThree = forecast.list[21].weather[0].icon
+    var iconThreeUrl = "https://openweathermap.org/img/wn/" + iconThree + ".png"
+    var dayThree = document.querySelector("#day-three")
+    var imgThree = document.querySelector("#img-three")
+    var tempThree = document.querySelector("#temp-three")
+    var humidThree = document.querySelector("#humid-three")
+    dayThree.textContent = moment().add(3, "day").format("MM/DD/YYYY")
+    imgThree.setAttribute("src", iconThreeUrl) 
+    tempThree.textContent = "Temp: " + forecast.list[21].main.temp + " °F"
+    humidThree.textContent = "Humidity: " + forecast.list[21].main.humidity + " %"
+
+    // day four
+    var iconFour = forecast.list[29].weather[0].icon
+    var iconFourUrl = "https://openweathermap.org/img/wn/" + iconFour + ".png"
+    var dayFour = document.querySelector("#day-four")
+    var imgFour = document.querySelector("#img-four")
+    var tempFour = document.querySelector("#temp-four")
+    var humidFour = document.querySelector("#humid-four")
+    dayFour.textContent = moment().add(4, "day").format("MM/DD/YYYY")
+    imgFour.setAttribute("src", iconFourUrl) 
+    tempFour.textContent = "Temp: " + forecast.list[29].main.temp + " °F"
+    humidFour.textContent = "Humidity: " + forecast.list[29].main.humidity + " %"
+
+    // day five
+    var iconFive = forecast.list[37].weather[0].icon
+    var iconFiveUrl = "https://openweathermap.org/img/wn/" + iconFive + ".png"
+    var dayFive = document.querySelector("#day-five")
+    var imgFive = document.querySelector("#img-five")
+    var tempFive = document.querySelector("#temp-five")
+    var humidFive = document.querySelector("#humid-five")
+    dayFive.textContent = moment().add(5, "day").format("MM/DD/YYYY")
+    imgFive.setAttribute("src", iconFiveUrl) 
+    tempFive.textContent = "Temp: " + forecast.list[37].main.temp + " °F"
+    humidFive.textContent = "Humidity: " + forecast.list[37].main.humidity + " %"
+
+    cardDeckEl.classList.remove("hidden")
+}
 
 cityFormEl.addEventListener("submit", formSubmitHandler)
